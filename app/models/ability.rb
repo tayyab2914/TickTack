@@ -9,6 +9,7 @@ class Ability
     can [:read, :update], Ticket, assignee_id: user.id
     
     can :assigned, Ticket, assignee_id: user.id
+    can :created, Ticket, assigner_id: user.id
     can :users, Ticket
 
     cannot [:read, :update, :destroy], Ticket do |ticket|

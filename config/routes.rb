@@ -3,6 +3,7 @@ Rails.application.routes.draw do
     collection do
       get :users
       get :assigned
+      get :created
     end
   end
   root 'core#index'

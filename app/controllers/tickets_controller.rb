@@ -68,7 +68,7 @@ class TicketsController < ApplicationController
     @ticket.destroy
 
     respond_to do |format|
-      format.html { redirect_to tickets_url, notice: "Ticket was successfully destroyed." }
+      format.html { redirect_to created_tickets_path, notice: "Ticket was successfully destroyed." }
       format.json { head :no_content }
     end
   end
@@ -81,6 +81,10 @@ class TicketsController < ApplicationController
 
   def assigned
     @assigned_tickets = Ticket.where(assignee_id: current_user.id)
+  end
+
+  def created
+    @created_tickets = Ticket.where(assigner_id: current_user.id)
   end
 
   private
