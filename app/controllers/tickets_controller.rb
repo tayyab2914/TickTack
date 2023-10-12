@@ -17,11 +17,13 @@ class TicketsController < ApplicationController
 
   # GET /tickets/1/edit
   def edit
+    @assignee_email = User.find(@ticket.assignee_id).email
   end
 
   # POST /tickets or /tickets.json
   def create
     @ticket = Ticket.new(ticket_params)
+    @ticket.assignee_id ||= current_user.id if @ticket.assignee_id.nil?
 
     respond_to do |format|
       if @ticket.save
@@ -55,6 +57,12 @@ class TicketsController < ApplicationController
       format.html { redirect_to tickets_url, notice: "Ticket was successfully destroyed." }
       format.json { head :no_content }
     end
+  end
+
+  def users
+    query = params[:query]
+    users = User.where('email LIKE ?', "#{query}%")
+    render json: { users: users }
   end
 
   private

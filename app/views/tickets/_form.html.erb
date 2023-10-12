@@ -1,57 +1,139 @@
-<%= form_with(model: ticket) do |form| %>
-  <% if ticket.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(ticket.errors.count, "error") %> prohibited this ticket from being saved:</h2>
 
-      <ul>
-        <% ticket.errors.each do |error| %>
-          <li><%= error.full_message %></li>
+<%= render 'layouts/sidebar'%>
+<div class="p-4 sm:ml-64">
+  <div class="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700">
+    <div class="max-w-md mx-auto bg-white p-6 rounded-lg shadow-md">
+      <h2 class="text-2xl font-semibold mb-4">Ticket Details</h2>
+      <%= form_with(model: ticket, class: 'w-full') do |form| %>
+        <% if ticket.errors.any? %>
+          <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 mb-4 rounded">
+            <h2 class="text-lg font-semibold"><%= pluralize(ticket.errors.count, "error") %> prohibited this ticket from being saved:</h2>
+            <ul class="list-disc ml-6">
+              <% ticket.errors.each do |error| %>
+                <li><%= error.full_message %></li>
+              <% end %>
+            </ul>
+          </div>
         <% end %>
-      </ul>
+        <div class="mb-4">
+          <%= form.label :title, class: 'block text-gray-700 text-sm font-semibold mb-2' %>
+          <%= form.text_field :title, class: 'form-input w-full bg-gray-100 rounded-md px-4 py-2' %>
+        </div>
+        <div class="mb-4">
+          <%= form.label :description, class: 'block text-gray-700 text-sm font-semibold mb-2' %>
+          <%= form.text_area :description, class: 'form-input w-full bg-gray-100 rounded-md px-4 py-2' %>
+        </div>
+        <div class="grid grid-cols-2 gap-4 mb-4">
+          <div>
+            <%= form.label :start_date, class: 'block text-gray-700 text-sm font-semibold mb-2' %>
+            <%= form.date_select :start_date, class: 'form-input w-full bg-gray-100 rounded-md px-4 py-2' %>
+          </div>
+          <div>
+            <%= form.label :end_date, class: 'block text-gray-700 text-sm font-semibold mb-2' %>
+            <%= form.date_select :end_date, class: 'form-input w-full bg-gray-100 rounded-md px-4 py-2' %>
+          </div>
+        </div>
+        <div class="mb-4">
+          <%= form.label :priority, class: 'block text-gray-700 text-sm font-semibold mb-2' %>
+          <%= form.select :priority, ['Urgent', 'Important', 'Moderate', 'Low'], {}, class: 'form-select w-full bg-gray-100 rounded-md px-4 py-2' %>
+        </div>
+  
+        <div class="mb-4">
+          <%= form.label :status, class: 'block text-gray-700 text-sm font-semibold mb-2' %>
+          <%= form.select :status, ['New','Pending', 'In Progress', 'Completed'], {}, class: 'form-select w-full bg-gray-100 rounded-md px-4 py-2' %>
+        </div>
+   
+        <div class="grid grid-cols-1 gap-4 mb-6">
+          <div>
+            <%= form.label :assigner_id, class: 'block text-gray-700 text-sm font-semibold mb-2 hidden' %>
+            <%= form.number_field :assigner_id, class: "form-input w-full bg-gray-100 rounded-md px-4 py-2 hidden", value:current_user.id%>
+          </div>
+          <div>
+            <%= form.label :assignee_id, class: 'text-gray-700 text-sm font-semibold mb-2 hidden'%>
+            <%= form.number_field :assignee_id, id: 'assignee-id-input', class: "form-input w-full bg-gray-100 rounded-md px-4 py-2 hidden"%>
+          </div>
+          <div class="mb-4">
+            <%= form.label :search_assignee, class: 'block text-gray-700 text-sm font-semibold mb-2' %>
+            <input type="text" id="assignee-email-input" class="form-input w-full bg-gray-100 rounded-md px-4 py-2">
+          </div>
+
+          <div class="mb-4">
+            <%= form.label :select_email, class: 'block text-gray-700 text-sm font-semibold mb-2'%>
+            <select id="user-search-results" class="border w-full rounded bg-white rounded-md px-4 py-2">
+            <option><%=@assignee_email ? @assignee_email : current_user.email%><option>
+            </select>
+          </div>
+
+        </div>
+        <div class="flex justify-between items-center mb-6">
+          <%= link_to 'Back', tickets_path, class: 'bg-blue-200 hover:bg-blue-300 font-semibold py-2 px-4 rounded-full cursor-pointer' %>
+          <%= form.submit 'Save', class: 'bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-full cursor-pointer' %>
+        </div>
+      <% end %>
     </div>
-  <% end %>
-
-  <div class="field">
-    <%= form.label :title %>
-    <%= form.text_field :title %>
   </div>
+</div>
 
-  <div class="field">
-    <%= form.label :description %>
-    <%= form.text_area :description %>
-  </div>
 
-  <div class="field">
-    <%= form.label :priority %>
-    <%= form.text_field :priority %>
-  </div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
 
-  <div class="field">
-    <%= form.label :status %>
-    <%= form.text_field :status %>
-  </div>
+  $(document).ready(function() {
 
-  <div class="field">
-    <%= form.label :start_date %>
-    <%= form.date_select :start_date %>
-  </div>
+    $('#assignee-email-input').on('input', function() {
+      var searchQuery = $(this).val();
+      if (searchQuery == "") {
+        searchQuery = "1";
+      }
 
-  <div class="field">
-    <%= form.label :end_date %>
-    <%= form.date_select :end_date %>
-  </div>
+      $.ajax({
+        url: '/tickets/users', // Replace with your actual endpoint
+        method: 'GET',
+        data: { query: searchQuery },
+        dataType: 'json',
+        success: function(response) {
+          var resultsContainer = $('#user-search-results');
+          resultsContainer.empty();
 
-  <div class="field">
-    <%= form.label :assigner_id %>
-    <%= form.number_field :assigner_id %>
-  </div>
+          $.each(response.users, function(index, user) {
+            var userItem = $(`<option class="user-item" data-userid=${user.id}>` + user.email + '</option>');
+            resultsContainer.append(userItem);
+          });
 
-  <div class="field">
-    <%= form.label :assignee_id %>
-    <%= form.number_field :assignee_id %>
-  </div>
+          var userId = document.getElementsByClassName('user-item')
+    
+          if (userId.length === 0)
+          {
+            var userItem = $(`<option class="user-item">` + "Me" + '</option>');
+            resultsContainer.append(userItem);
+          }
+          else
+          {
+            userId = userId[0]
+            userId = userId.getAttribute("data-userid");
+            let assigneeInput = document.getElementById('assignee-id-input');
+            assigneeInput.value = userId
+            assigneeInput.innerHTML = userId
+            
+          }
 
-  <div class="actions">
-    <%= form.submit %>
-  </div>
-<% end %>
+        },
+        error: function(error) {
+          // Handle errors here, e.g., display an error message to the user
+          console.error(error);
+
+          // Clear the search results container in case of an error
+          resultsContainer.empty();
+        }
+      });
+    });
+
+    $("#user-search-results").on("change", function() {
+      var userId = $(this).find("option:selected").data("userid");
+      let assigneeInput = document.getElementById('assignee-id-input');
+      assigneeInput.value = userId
+      assigneeInput.innerHTML = userId
+
+    });
+  });
+</script>

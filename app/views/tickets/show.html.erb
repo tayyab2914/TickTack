@@ -1,44 +1,49 @@
+<%= render 'layouts/sidebar' %>
 <p id="notice"><%= notice %></p>
-
-<p>
-  <strong>Title:</strong>
-  <%= @ticket.title %>
-</p>
-
-<p>
-  <strong>Description:</strong>
-  <%= @ticket.description %>
-</p>
-
-<p>
-  <strong>Priority:</strong>
-  <%= @ticket.priority %>
-</p>
-
-<p>
-  <strong>Status:</strong>
-  <%= @ticket.status %>
-</p>
-
-<p>
-  <strong>Start date:</strong>
-  <%= @ticket.start_date %>
-</p>
-
-<p>
-  <strong>End date:</strong>
-  <%= @ticket.end_date %>
-</p>
-
-<p>
-  <strong>Assigner:</strong>
-  <%= @ticket.assigner_id %>
-</p>
-
-<p>
-  <strong>Assignee:</strong>
-  <%= @ticket.assignee_id %>
-</p>
-
-<%= link_to 'Edit', edit_ticket_path(@ticket) %> |
-<%= link_to 'Back', tickets_path %>
+<div class="p-4 sm:ml-64">
+  <div class="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700 transition-transform transform hover:scale-105">
+    <div class="bg-white p-6 rounded-lg shadow-md">
+      <h2 class="text-2xl font-semibold mb-4">Ticket Details</h2>
+      <div class="grid grid-cols-1 gap-4">
+        <div>
+          <p class="text-gray-600 font-semibold">Title:</p>
+          <p class="mb-4"><%= @ticket.title %></p>
+        </div>
+        <div>
+          <p class="text-gray-600 font-semibold">Description:</p>
+          <p class="mb-8"><%= @ticket.description %></p>
+        </div>
+      </div>
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <p class="text-gray-600 font-semibold">Start Date:</p>
+          <p class="mb-4"><%= @ticket.start_date %></p>
+        </div>
+        <div>
+          <p class="text-gray-600 font-semibold">End Date:</p>
+          <p class="mb-4"><%= @ticket.end_date %></p>
+        </div>
+        <div>
+          <p class="text-gray-600 font-semibold">Priority:</p>
+          <p class="mb-4"><%= @ticket.priority %></p>
+        </div>
+        <div>
+          <p class="text-gray-600 font-semibold">Status:</p>
+          <p class="mb-4"><%= @ticket.status %></p>
+        </div>
+        <div>
+          <p class="text-gray-600 font-semibold">Assigner:</p>
+          <p class="mb-4"><%= @ticket.assigner.email %></p>
+        </div>
+        <div>
+          <p class="text-gray-600 font-semibold">Assignee:</p>
+          <p class="mb-4"><%= @ticket.assignee.email %></p>
+        </div>
+      </div>
+      <div class="mt-6 flex justify-center">
+        <%= link_to 'Edit', edit_ticket_path(@ticket), class: 'text-white mx-2 px-4 py-2 bg-blue-500 text-white font-semibold rounded-full hover:bg-blue-600 transition duration-300 ease-in-out transform hover:scale-105' %>
+        <%= link_to 'Back', tickets_path, class: 'px-4 py-2 bg-gray-300 text-gray-600 font-semibold rounded-full hover:bg-gray-400 transition duration-300 ease-in-out transform hover:scale-105' %>
+      </div>
+    </div>
+  </div>
+</div>

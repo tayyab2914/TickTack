@@ -10,13 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_10_11_130021) do
+ActiveRecord::Schema.define(version: 2023_10_12_063713) do
 
   create_table "tickets", force: :cascade do |t|
     t.string "title"
     t.text "description"
     t.string "priority"
-    t.string "status"
+    t.string "status", default: "New"
     t.date "start_date"
     t.date "end_date"
     t.integer "assigner_id"
