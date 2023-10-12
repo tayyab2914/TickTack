@@ -1,0 +1,13 @@
+<%= render 'layouts/sidebar'%>
+<div class="p-4 sm:ml-64">
+  <div class="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700">
+    <%= month_calendar(events: @meetings, attribute: :end_date) do |date, meetings| %>
+      <%= date.day %>
+      <% meetings.each do |meeting| %>
+        <div class="text-white my-1 p-1 text-center rounded-md  <%=meeting.priority == 'Urgent' ? 'bg-red-500' : (meeting.priority == 'Important' ? 'bg-red-400' : (meeting.priority == 'Moderate' ? 'bg-yellow-500': 'bg-green-600'))%>">
+          <%= link_to meeting.title, meeting, class: 'hover:underline'%>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+</div>

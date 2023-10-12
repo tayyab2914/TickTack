@@ -1,0 +1,104 @@
+.simple-calendar {
+
+    table {
+        border-collapse: collapse;
+        width: 100%;
+        max-width: 100%;
+        background-color: #ffffff;
+        /* Light gray background */
+        border: 1px solid #ddd;
+    }
+
+    th {
+        text-align: left;
+        padding: 12px;
+        border: 1px solid #ddd;
+        border-bottom-width: 2px;
+        box-sizing: border-box;
+        background-color: #f2f2f2;
+        /* Light gray header background */
+        color: #333;
+        /* Dark gray text */
+    }
+
+    td {
+        width: 14%;
+        padding: 12px;
+        vertical-align: top;
+        border: 1px solid #ddd;
+        border-top-width: 1px;
+        border-right-width: 1px;
+        border-bottom-width: 1px;
+        border-left-width: 1px;
+        transition: background-color 0.3s ease;
+        /* Add a smooth background color transition */
+
+        /* Animation for scale on hover */
+        transform-origin: center;
+        transform: scale(1);
+        transition: transform 0.2s ease-in-out;
+    }
+
+    .calendar-heading {
+        background-color: #333;
+        color: #fff;
+        padding: 16px;
+        border-radius: 8px 8px 0 0;
+        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        transition: background-color 0.3s ease;
+        /* Add a smooth background color transition */
+    }
+
+    .calendar-heading a {
+        text-decoration: none;
+        color: #fff;
+        font-size: 18px;
+        margin: 0 12px;
+        transition: color 0.3s ease, transform 0.2s ease-in-out;
+        /* Add hover transitions */
+    }
+
+    .calendar-heading a:hover {
+        color: #ddd;
+        /* Change text color on hover */
+        transform: translateY(-2px);
+        /* Add a subtle vertical shift on hover */
+    }
+
+    .calendar-title {
+        font-size: 24px;
+        margin: 0;
+        font-weight: bold;
+        /* Make the title bold for emphasis */
+    }
+
+
+    .day {
+        height: 80px;
+    }
+
+    .today { 
+        background: #cbd7ff;
+    }
+
+    .prev-month {
+        color: #d4d4d4;
+        background: #ffffff;
+    }
+
+    .next-month {
+        color: #d4d4d4;
+        background: #ffffff;
+        /* Light gray background for previous and next month dates */
+    }
+
+    td:hover {
+        background-color: #f5f5f5;
+        cursor: pointer;
+        transform: scale(1.05);
+        /* Scale up on hover for animation */
+    }
+
+    /* Add styles for other classes as needed */
+}

@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'calendar/index'
   resources :tickets do
     collection do
       get :users
@@ -9,4 +10,5 @@ Rails.application.routes.draw do
   root 'core#index'
   devise_for :users
   get 'dashboard', to: "core#dashboard" 
+  get 'calendar', to: "calendar#index"
 end
