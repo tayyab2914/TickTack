@@ -1,9 +1,11 @@
 <%= render 'layouts/sidebar'%>
-
-
-
 <div class="p-4 sm:ml-64">
    <div class="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700"> 
+      <% if alert.present? %>
+         <div class="bg-red-600 border-t-4 border-red-700 text-bold rounded-b text-blue-900 px-4 py-3 mb-4 text-center text-white" role="alert">
+            <p><%= alert %></p>
+         </div>
+      <% end %>
       <a href="<%= new_ticket_path %>">
          <div class="flex items-center justify-center h-48 mb-4 rounded bg-gradient-to-br from-blue-300 to-blue-500 dark:from-blue-600 dark:to-blue-800 text-white cursor-pointer">
             <div class="text-center">

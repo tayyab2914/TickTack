@@ -21,6 +21,8 @@ gem 'jbuilder', '~> 2.7'
 gem 'devise', '~> 4.7', '>= 4.7.3'
 # For Pie Chart
 gem 'chartkick'
+# Authorization
+gem 'cancancan'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
 # Use Active Model has_secure_password

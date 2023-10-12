@@ -1,5 +1,7 @@
 class TicketsController < ApplicationController
   before_action :set_ticket, only: %i[ show edit update destroy ]
+  before_action :authenticate_user!
+  load_and_authorize_resource
 
   # GET /tickets or /tickets.json
   def index
@@ -39,13 +41,25 @@ class TicketsController < ApplicationController
   # PATCH/PUT /tickets/1 or /tickets/1.json
   def update
     respond_to do |format|
-      if @ticket.update(ticket_params)
-        format.html { redirect_to ticket_url(@ticket), notice: "Ticket was successfully updated." }
-        format.json { render :show, status: :ok, location: @ticket }
+      if @ticket.assigner_id == current_user.id
+        if @ticket.update(ticket_params)
+          format.html { redirect_to ticket_url(@ticket), notice: "Ticket was successfully updated." }
+          format.json { render :show, status: :ok, location: @ticket }
+        else
+          format.html { render :edit, status: :unprocessable_entity }
+          format.json { render json: @ticket.errors, status: :unprocessable_entity }
+        end
       else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @ticket.errors, status: :unprocessable_entity }
+        # Only update the status
+        if @ticket.update(status: params[:ticket][:status])
+          format.html { redirect_to ticket_url(@ticket), notice: "ticket status was successfully updated." }
+          format.json { render :show, status: :ok, location: @ticket }
+        else
+          format.html { render :edit, status: :unprocessable_entity }
+          format.json { render json: @ticket.errors, status: :unprocessable_entity }
+        end
       end
+
     end
   end
 
@@ -63,6 +77,10 @@ class TicketsController < ApplicationController
     query = params[:query]
     users = User.where('email LIKE ?', "#{query}%")
     render json: { users: users }
+  end
+
+  def assigned
+    @assigned_tickets = Ticket.where(assignee_id: current_user.id)
   end
 
   private

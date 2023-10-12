@@ -6,4 +6,5 @@ class User < ApplicationRecord
 
   has_many :assigned_tickets, class_name: 'Ticket'
   has_many :created_tickets, class_name:'Ticket' , dependent: :destroy
+  
 end
