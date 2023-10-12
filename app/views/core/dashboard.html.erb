@@ -1,1 +1,44 @@
 <%= render 'layouts/sidebar'%>
+
+
+
+<div class="p-4 sm:ml-64">
+   <div class="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700"> 
+      <a href="<%= new_ticket_path %>">
+         <div class="flex items-center justify-center h-48 mb-4 rounded bg-gradient-to-br from-blue-300 to-blue-500 dark:from-blue-600 dark:to-blue-800 text-white cursor-pointer">
+            <div class="text-center">
+                  <svg class="w-12 h-12 mx-auto" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
+                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
+                  </svg>
+                  <p class="text-2xl font-semibold">Create New Ticket</p>
+            </div>
+         </div>
+      </a>
+      <div class="grid grid-cols-2 gap-4 mb-4">
+         <div class="flex flex-col items-center justify-center p-4 rounded bg-blue-100 dark:bg-blue-800">
+            <svg class="w-12 h-12 text-blue-500 dark:text-blue-300" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+            </svg>
+            <p class="text-xl text-blue-600 dark:text-blue-400">New Tickets <%= @pending_tickets %></p>
+         </div>
+         <div class="flex flex-col items-center justify-center p-4 rounded bg-red-100 dark:bg-red-800">
+            <svg class="w-12 h-12 text-red-500 dark:text-red-300" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16l-4-4m0 0l4-4m-4 4h18" />
+            </svg>
+            <p class="text-xl text-red-600 dark:text-red-400">In Progress <%= @completed_tickets %></p>
+         </div>
+         <div class="flex flex-col items-center justify-center p-4 rounded bg-yellow-100 dark:bg-yellow-800">
+            <svg class="w-12 h-12 text-yellow-500 dark:text-yellow-300" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8V4m0 0V4m0 4h4m-4 0H8m-4 0H4m0 4v4m0-4v4m0-4h4m-4 0H8" />
+            </svg>
+            <p class="text-xl text-yellow-600 dark:text-yellow-400">Pending (2)<%= @in_progress_tickets %></p>
+         </div>
+         <div class="flex flex-col items-center justify-center p-4 rounded bg-green-100 dark:bg-green-800">
+            <svg class="w-12 h-12 text-green-500 dark:text-green-300" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+            </svg>
+            <p class="text-xl text-green-600 dark:text-green-400">Completed <%= @new_tickets %></p>
+         </div>
+      </div>
+   </div>
+</div>
